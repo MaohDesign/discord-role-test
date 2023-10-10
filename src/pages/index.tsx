@@ -94,24 +94,31 @@ export default function Home() {
           >
             Discord Role Test
           </Text>
-          {!isDisplaying && (
-            <Flex justifyContent={"center"} alignItems={"center"} gap={"16px"}>
-              {connectors.map((connector) => (
-                <Button
-                  disabled={!connector.ready}
-                  key={connector.id}
-                  onClick={() => connect({ connector })}
-                  isLoading={isLoading && connector.id === pendingConnector?.id}
-                >
-                  {connector.name}
-                  {isLoading &&
-                    connector.id === pendingConnector?.id &&
-                    " (connecting)"}
-                </Button>
-              ))}
-            </Flex>
-          )}
-          {isDisplaying && (
+          {!isDisplaying ||
+            (!address && (
+              <Flex
+                justifyContent={"center"}
+                alignItems={"center"}
+                gap={"16px"}
+              >
+                {connectors.map((connector) => (
+                  <Button
+                    disabled={!connector.ready}
+                    key={connector.id}
+                    onClick={() => connect({ connector })}
+                    isLoading={
+                      isLoading && connector.id === pendingConnector?.id
+                    }
+                  >
+                    {connector.name}
+                    {isLoading &&
+                      connector.id === pendingConnector?.id &&
+                      " (connecting)"}
+                  </Button>
+                ))}
+              </Flex>
+            ))}
+          {isDisplaying && address && (
             <Box>
               <Box>
                 <Text as="span" pr="8px">
